@@ -34,9 +34,12 @@ public class Controle {
     public List<Tarefas> listar() {
         
         // Recurso de Ordenação
-        Sort.by("prioridade").descending().and(Sort.by("nome").ascending());
+        Sort sort = Sort.by(
+            Sort.Order.desc("prioridade"),
+            Sort.Order.asc("nome")
+                           );
         
-        return acao.findAll();
+        return acao.findAll(sort);
     }
 
     @PutMapping("/") // Atualizar
