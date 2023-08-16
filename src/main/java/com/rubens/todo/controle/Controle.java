@@ -1,6 +1,9 @@
 package com.rubens.todo.controle;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,30 +18,36 @@ import com.rubens.todo.repositorio.TarefasRepositorio;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200/") //Cors Fix
+@CrossOrigin(origins = "http://localhost:4200/") // Cors Fix
 public class Controle {
-       
-    //Para não precisar instanciar esse objeto em cada rota.
+
     @Autowired
     private TarefasRepositorio acao;
 
-    @PostMapping("/")               	//Incluir
-    public Tarefas cadastrar(@RequestBody Tarefas t){
-        return acao.save(t);
+    @PostMapping("/") // Incluir
+    public List<Tarefas> cadastrar(@RequestBody Tarefas t) {
+        acao.save(t);
+        return listar();
     }
 
-    @GetMapping("/")            	//Selecionar
-    public Iterable<Tarefas> selecionar(){               
+    @GetMapping("/") // Selecionar
+    public List<Tarefas> listar() {
+        
+        // Recurso de Ordenação
+        Sort.by("prioridade").descending().and(Sort.by("nome").ascending());
+        
         return acao.findAll();
     }
 
-    @PutMapping("/")         	//Atualizar
-    public Tarefas atualizar(@RequestBody Tarefas t) {
-            return acao.save(t);
+    @PutMapping("/") // Atualizar
+    public List<Tarefas> atualizar(@RequestBody Tarefas t) {
+        acao.save(t);
+        return listar();
     }
 
-    @DeleteMapping("/{id}")//Deletar
-    public void deletar(@PathVariable long id){
+    @DeleteMapping("/{id}") // Deletar
+    public List<Tarefas> deletar(@PathVariable long id) {
         acao.deleteById(id);
+        return listar();
     }
 }
