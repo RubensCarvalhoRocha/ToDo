@@ -14,7 +14,6 @@ public class Tarefas {
     @Id                                                                 
     @GeneratedValue(strategy = GenerationType.IDENTITY) //--> Gerador de Id automatico
     private long id;
-    private String nome;
     private String descricao;
     private boolean realizado;
     private int prioridade;
@@ -26,12 +25,7 @@ public class Tarefas {
     public void setId(long id) {
         this.id = id;
     }
-    public String getNome() {
-        return nome;
-    }
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+ 
     public String getDescricao() {
         return descricao;
     }
