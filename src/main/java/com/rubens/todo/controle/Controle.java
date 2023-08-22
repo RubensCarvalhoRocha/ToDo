@@ -35,8 +35,7 @@ public class Controle {
         
         // Recurso de Ordenação
         Sort sort = Sort.by(
-            Sort.Order.desc("prioridade"),
-            Sort.Order.asc("nome")
+            Sort.Order.desc("prioridade")
                            );
         
         return acao.findAll(sort);
